@@ -1,0 +1,42 @@
+\documentclass[border=2pt,tikz]{standalone}
+% \documentclass{article}
+
+% \usepackage[vmargin=10mm]{geometry}
+% \usepackage{tikz}
+\usetikzlibrary{arrows,automata,positioning}
+\tikzset{
+    every picture/.style={
+        semithick,shorten >=1pt,>=stealth',node distance=4em,
+        every state/.style={minimum size=1em,align=center},
+        accepting/.style={double distance=.1em,outer sep=\pgflinewidth}
+    }
+}
+\usepackage[fontset=ubuntu]{ctex}
+\begin{document}
+
+\begin{tikzpicture}
+    \node[state,initial]   (0) {unpaid};
+    \node[state]           (1) [above=of 0] {close};
+    \node[state]           (2) [below=of 0] {timeout};
+    \node[state]           (3) [right=of 0] {paying};
+    \node[state]           (4) [above=of 3] {payfailed};
+    \node[state]           (5) [right=of 3] {paid};
+    \node[state]           (6) [right=of 5] {refund};
+    \node[state]           (7) [above=of 6] {refundfailed};
+    \node[state]           (9) [below=of 6] {refundsuccess};
+    \node[state]           (8) [below=of 5] {complete};
+    \path[->](0) edge [above] node         {$cancel$}    (1)
+ 			 (0) edge [above] node         {$timeout$}   (2)
+             (0) edge [above] node         {$paying$}    (3)
+             (3) edge [above] node         {$failed$}    (4)
+             (3) edge [above] node         {$success$}   (5)
+             (5) edge [above] node         {$refund$}    (6)
+             (6) edge [above] node         {$failed$}    (7)
+             (6) edge [above] node         {$success$}  (9)
+             (9) edge [above] node         {$complete$}  (8)
+             (9) edge [above] node         {$paid$}  (5)
+             (5) edge [above] node         {$time$}  (8)
+              ;
+\end{tikzpicture}
+
+\end{document}

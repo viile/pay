@@ -16,26 +16,23 @@
 
 \begin{tikzpicture}
     \node[state,initial]   (0) {unpaid};
-    \node[state]           (1) [above=of 0] {close};
-    \node[state]           (2) [below=of 0] {timeout};
-    \node[state]           (3) [right=of 0] {paying};
-    \node[state]           (4) [above=of 3] {payfailed};
-    \node[state]           (5) [right=of 3] {paid};
-    \node[state]           (6) [right=of 5] {refund};
-    \node[state]           (7) [above=of 6] {refundfailed};
-    \node[state]           (9) [below=of 6] {refundsuccess};
+    \node[state]           (1) [above=of 0] {$close$};
+    \node[state]           (3) [right=of 0] {$paying$};
+    \node[state]           (5) [right=of 3] {$paid$};
+    \node[state]           (6) [right=of 5] {$refund$};
+    \node[state]           (7) [above=of 6] {$refund_failed$};
+    \node[state]           (9) [below=of 6] {$refund_success$};
     \node[state]           (8) [left=of 9] {complete};
-    \path[->](0) edge [above] node         {$cancel$}    (1)
- 			 (0) edge [above] node         {$timeout$}   (2)
+    \path[->](0) edge [above] node         {$cancel/timeout$}    (1)
              (0) edge [above] node         {$paying$}    (3)
-             (3) edge [above] node         {$failed$}    (4)
+             (3) edge [loop above] node         {$failed$}    (3)
              (3) edge [above] node         {$success$}   (5)
              (5) edge [above] node         {$refund$}    (6)
              (6) edge [above] node         {$failed$}    (7)
              (6) edge [above] node         {$success$}  (9)
              (9) edge [above] node         {$complete$}  (8)
-             (9) edge [above] node         {$paid$}  (5)
-             (5) edge [above] node         {$time$}  (8)
+             (9) edge [above] node         {$remain$}  (5)
+             (5) edge [above] node         {$timeout$}  (8)
               ;
 \end{tikzpicture}
 

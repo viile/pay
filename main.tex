@@ -24,7 +24,7 @@
     \node[state]           (6) [right=of 5] {refund};
     \node[state]           (7) [above=of 6] {refundfailed};
     \node[state]           (9) [below=of 6] {refundsuccess};
-    \node[state]           (8) [below=of 5] {complete};
+    \node[state]           (8) [left=of 9] {complete};
     \path[->](0) edge [above] node         {$cancel$}    (1)
  			 (0) edge [above] node         {$timeout$}   (2)
              (0) edge [above] node         {$paying$}    (3)
